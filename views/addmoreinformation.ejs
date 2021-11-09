@@ -1,0 +1,132 @@
+<%- include("./layouts/header"); -%>
+
+    <div class="container  mt-4 register">
+
+
+        <form method="post" action="/detail/addmoreinformation" class="needs-validation" nonvalidate>
+
+            <div class="form-group mb-3">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" name="age" class="form-control" id="age" placeholder="Age" size="3" maxlength="3"
+                    required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="classofs" class="form-label">class</label>
+                <input type="number" name="classofs" class="form-control" id="classofs" placeholder="class" size="3"
+                    maxlength="3" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="gender" class="form-label">Gender</label><br>
+                <input type="radio" name="gender" id="gender" value="male" class="" style="margin-left: 10px;">
+                Male
+                <input type="radio" name="gender" id="gender" value="Female" class="" style="margin-left: 10px;">
+                Female
+                <input type="radio" name="gender" id="gender" value="other" class="" style="margin-left: 10px;">
+                Prefer not to say
+            </div>
+            <div class="form-group mb-3 mt-3">
+                <label for="birthday" class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" id="birthday" name="birthday" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" name="address" id="address" placeholder="address" class="form-control" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+
+            <div class="form-group mb-3">
+                <label for="mobno" class="form-label"> Contact Number </label><br>
+                <input type="tel" name="mobno" id="mobno" placeholder="e.g : 1231234123" pattern="[0-9]{10}"
+                    maxlength="12" class="form-control" required />
+
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Add Detail</button>
+        </form>
+    </div>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+
+
+
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        // fun();
+                        form.classList.add('was-validated')
+
+
+                    }, false)
+                })
+
+
+
+
+        })()
+        // function hello(e) {
+        //     e.preventDefault();
+        // }
+
+        // const loadCharacters = async () => {
+        //     try {
+        //         const res = await fetch('https://hp-api.herokuapp.com/api/characters');
+        //         hpCharacters = await res.json();
+        //         displayCharacters(hpCharacters);
+        //     } catch (err) {
+        //         console.error(err);
+        //     }
+        // };
+
+        // function fun() {
+
+
+        //     fetch("/detail/addmoreinformation", {
+        //         method: "POST",
+
+
+        //         headers: {
+        //             'Content-Type': 'application/json',
+
+        //         },
+        //         body: JSON.stringify({
+        //             name: "balajee",
+        //             class: "bapass"
+        //         }),
+        //     })
+        //         .then(response => response.json())
+        //         .then(json => console.log(json))
+        //         .catch((e) => console.log(e));
+        // }
+
+
+
+
+    </script>
+
+    <%- include("./layouts/footer"); -%>
