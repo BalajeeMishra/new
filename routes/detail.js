@@ -27,11 +27,8 @@ router.get("/addmoreinformation",isLoggedIn,wrapAsync(async(req,res,next)=>{
   var todayDate = String(date.getDate()).padStart(2, '0');
   var datePattern = year + '-' + month + '-' + todayDate;
   }
-
-
   res.render("addmoreinformation",{
     name:req.user.name,
-    
   });
 }));
 

@@ -12,6 +12,7 @@ var ejs = require('ejs');
 var pdf = require('html-pdf');
 const Mark=require("../models/studentadminside");
 
+
 router.get("/dashboard", async (req, res) => {
    res.render("dashboard",{
      user:req.user
@@ -20,23 +21,24 @@ router.get("/dashboard", async (req, res) => {
 });
 
 router.get("/resultpublish",async(req,res)=>{
+ const markOfUser=await Mark.find({userId:req.user._id});
+ const {markDetail}=markOfUser[0];
+ const data={val:"balajee",currentUser:req.user, success:0, error:0,result:markDetail};
  var m=__dirname.slice(0, __dirname.length-7);
-  // ejs.render();
-  ejs.renderFile(path.join(__dirname.slice(0, __dirname.length-7),"views/report.ejs"),{val:"balajee",currentUser:req.user, success:0, error:0},{},function(err, str) {
+  ejs.renderFile(path.join(__dirname.slice(0, __dirname.length-7),"views/report.ejs"),data,{},function(err, str) {
     if (err) { console.log(err);
-   
      return res.send(err).status(400);
     }
 
     // str now contains your rendered html
     pdf.create(str).toFile(`${m}/public/report.pdf`, function(err, data) {
       if (err) return res.send(err)
-
       // res.attachment('report.pdf');
       res.render("result.ejs");
     });
   });
 });
+
 
 router.get(
   "/register",

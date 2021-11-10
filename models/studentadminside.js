@@ -12,6 +12,7 @@ const SubjectSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+  
 });
 const Mark=mongoose.model("Mark",SubjectSchema);
 module.exports=Mark;

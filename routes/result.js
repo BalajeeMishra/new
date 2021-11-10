@@ -18,14 +18,19 @@ router.get(
     })
   );
   router.get("/detail",async(req,res)=>{
-    res.render("adminrelated/aboutstudent",{selected_student});
+    const update= await User.find({_id:req.user._id});
+    let bool=update[0].resultShow;
+    if(update[0].resultShow){
+    return res.render("adminrelated/aboutstudent",{selected_student,bool});
+  }
+  res.render("adminrelated/aboutstudent",{selected_student,bool});
+    
   });
 
 
   router.post("/class",wrapAsync(async(req,res,next)=>{
-     selected_student=await Detail.find(req.body);
+    selected_student=await Detail.find(req.body);
     res.redirect("/result/detail");
-
   }));
   router.get("/markfillup/:id",async(req,res)=>{
         
@@ -34,6 +39,7 @@ router.get(
         });
   });
   router.post("/markfillup/:id",async(req,res)=>{
+   
     const arrayObj=[];
     for(var i in req.body){
       arrayObj.push({key:i,val:req.body[i]});
@@ -47,8 +53,14 @@ router.get(
     const newMark= new Mark({userId:req.params.id});
     newMark.markDetail=await arrayObj.map(f => ({ subject: f.key, mark: f.val }));
     await newMark.save();
+    User.findOneAndUpdate(req.user._id, {"resultShow":true}, {upsert: true}, function(err, doc) {
+      if (err) return res.send(500, {error: err});
+      return res.redirect("/result");
+  });
+  
+    // console.log(update)
     // req.flash("success", "Result added successfully!")
-    res.redirect("/result");
+    
 });
   
 

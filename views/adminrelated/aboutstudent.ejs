@@ -8,8 +8,9 @@
                 <th>result upload</th>
             </tr>
         </thead>
-        <% if(typeof selected_student!=undefined) {%>
+        <% if(selected_student) {%>
             <tbody>
+
                 <% selected_student.forEach((e,j)=>{%>
                     <tr>
                         <td>
@@ -18,12 +19,21 @@
                         <td>
                             <%=e.name%>
                         </td>
-                        <td>
-                            <a class="btn btn-danger" href="/result/markfillup/<%=e.userId%> ">Add</a>
-                        </td>
-                        <td>
-                            <a class="btn btn-danger" href="/result/markfillup/<%=e.userId%> ">Delete</a>
-                        </td>
+                        <%=bool %>
+                            <% if(bool){ %>
+                                <td>
+                                    <a class="btn btn-success" href="#">Uploaded</a>
+                                </td>
+                                <% } else{ %>
+
+                                    <td>
+                                        <a class="btn btn-danger" href="/result/markfillup/<%=e.userId%> ">Add</a>
+                                    </td>
+                                    <% } %>
+                                        <td>
+                                            <a class="btn btn-danger"
+                                                href="/result/markfillup/<%=e.userId%> ">Delete</a>
+                                        </td>
 
 
                     </tr>

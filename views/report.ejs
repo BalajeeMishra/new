@@ -3,7 +3,9 @@
     <h1>
         <%=val %>
     </h1>
+
     <div style="width: 50%; margin: auto;">
+
         <table class="table">
             <thead>
                 <tr>
@@ -11,24 +13,19 @@
                     <th>MARKS OBTAINED</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th>pHYSICS</th>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <th>Chemistry</th>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <th>mathematics</th>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <th>computer</th>
-                    <td>80</td>
-                </tr>
-            </tbody>
+            <% result.forEach((e)=>{ %>
+                <tbody>
+                    <tr>
+                        <th>
+                            <%=e.subject%>
+                        </th>
+                        <td>
+                            <%=e.mark%>
+                        </td>
+                    </tr>
+                </tbody>
+                <% }) %>
         </table>
+
     </div>
     <%- include("./layouts/footer"); -%>
