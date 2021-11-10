@@ -4,9 +4,14 @@ const SubjectSchema=new mongoose.Schema({
         {
         subject:String,
         mark:Number,
+       
         }
 
     ],
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
 });
-const MarkDetail=mongoose.Model("MarkDetail",SubjectSchema);
-module.exports=MarkDetail;
+const Mark=mongoose.model("Mark",SubjectSchema);
+module.exports=Mark;

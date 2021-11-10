@@ -23,6 +23,7 @@ router.get("/dashboard", async (req, res) => {
 //     if (err) return res.send(500, {error: err});
 //     return res.send('Succesfully saved.');
 // });
+
    res.render("dashboard",{
      user:req.user
    });

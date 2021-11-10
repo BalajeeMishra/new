@@ -1,6 +1,16 @@
 
 const mongoose = require("mongoose");
+
+const ImageSchema = new mongoose.Schema({
+  url: String,
+  filename: String
+});
+
 const DetailSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    // required: true
+},
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
@@ -28,6 +38,7 @@ classofs:{
      type:String,
      required:true
  },
+ images: ImageSchema
  
      
 });
