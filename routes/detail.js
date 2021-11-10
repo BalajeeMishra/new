@@ -26,7 +26,6 @@ router.get("/addmoreinformation",isLoggedIn,wrapAsync(async(req,res,next)=>{
   var month = String(date.getMonth() + 1).padStart(2,'0');
   var todayDate = String(date.getDate()).padStart(2, '0');
   var datePattern = year + '-' + month + '-' + todayDate;
-  // console.log(datePattern);
   }
 
 
@@ -38,20 +37,17 @@ router.get("/addmoreinformation",isLoggedIn,wrapAsync(async(req,res,next)=>{
 
 
 router.post("/addmoreinformation", upload.single("image"),wrapAsync(async(req,res)=>{
-  console.log(req.body);
     const user= req.user._id;
     const {age,mobno,birthday,gender,classofs,address,image}=req.body;
     const information= new Detail({age,mobno,birthday,gender,userId:user,classofs,address,image,name:req.user.name});
-    console.log(information);
-    console.log(req.file);
+    if(typeof req.file!=undefined){
     const {path,filename}=req.file;
-    // information.images = await req.file.map(f => ({ url: f.path, filename: f.filename }));
     information.images={
       url:path,
       filename
     };
+  }
     await information.save();
      res.redirect("/detail");
-    // res.json(req.body);
 }));
 module.exports = router;

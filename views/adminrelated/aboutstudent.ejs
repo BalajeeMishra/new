@@ -6,27 +6,30 @@
                 <th>Roll-Number</th>
                 <th>student-name</th>
                 <th>result upload</th>
-
             </tr>
         </thead>
+        <% if(typeof selected_student!=undefined) {%>
+            <tbody>
+                <% selected_student.forEach((e,j)=>{%>
+                    <tr>
+                        <td>
+                            <%=j%>
+                        </td>
+                        <td>
+                            <%=e.name%>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="/result/markfillup/<%=e.userId%> ">Add</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="/result/markfillup/<%=e.userId%> ">Delete</a>
+                        </td>
 
-        <tbody>
-            <% selected_student.forEach((e,j)=>{%>
-                <tr>
-                    <td>
-                        <%=j%>
-                    </td>
-                    <td>
-                        <%=e.name%>
-                    </td>
-                    <td>
-                    <td><a class="btn btn-danger" href="/result/markfillup/<%=e.userId%> ">Add</a>
-                    </td>
 
-
-                </tr>
-                <%}) %>
-        </tbody>
+                    </tr>
+                    <%}) %>
+            </tbody>
+            <% } %>
     </table>
 
     <%- include("../adminlayout/admin_footer"); -%>

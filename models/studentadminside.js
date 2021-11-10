@@ -4,7 +4,7 @@ const SubjectSchema=new mongoose.Schema({
         {
         subject:String,
         mark:Number,
-       
+        _id:false
         }
 
     ],

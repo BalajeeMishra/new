@@ -8,6 +8,9 @@ const User=require("../models/user");
 const { Router } = require("express");
 const Mark=require("../models/studentadminside");
 var selected_student;
+router.get("/",(req,res)=>{
+  res.send("result uploaded successfully...")
+})
 router.get(
     "/student",
     wrapAsync(async (req, res, next) => {
@@ -31,15 +34,21 @@ router.get(
         });
   });
   router.post("/markfillup/:id",async(req,res)=>{
-    // const markDetail=[{}];
-    // markDetail[0].subject="math";
-    // markDetail[0].mark=65;
-    const {math,English,sst,hindi,science}=req.body;  
-    const newResult= new Mark({"math":65});
-    // {markDetail[0].subject : markDetail[0].mark}
-    await newResult.save();
-    console.log(req.body);
-    res.send("hello world");
+    const arrayObj=[];
+    for(var i in req.body){
+      arrayObj.push({key:i,val:req.body[i]});
+    }
+    // arrayObj=[req.body];
+    // console.log(arrayObj);
+    // const result = arrayObj.map((value,i) => {
+    //   let [key, val] = Object.entries(value)[i];
+    //   return {key, val}
+    // });
+    const newMark= new Mark({userId:req.params.id});
+    newMark.markDetail=await arrayObj.map(f => ({ subject: f.key, mark: f.val }));
+    await newMark.save();
+    // req.flash("success", "Result added successfully!")
+    res.redirect("/result");
 });
   
 

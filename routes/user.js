@@ -7,30 +7,19 @@ const passport = require("passport");
 const { body,check } = require('express-validator');
 const {isLoggedIn}=require("../middleware");
 const { defaultMaxListeners } = require("events");
-// const nodemailer = require("nodemailer");
-// const jwt = require('jsonwebtoken');
 const path = require("path");
 var ejs = require('ejs');
-// const PDFDocument = require('pdfkit');
-// const fs = require('fs');
-// const doc = new PDFDocument();
 var pdf = require('html-pdf');
-
+const Mark=require("../models/studentadminside");
 
 router.get("/dashboard", async (req, res) => {
-
-//   User.findOneAndUpdate(req.user.name, {"admin":true}, {upsert: true}, function(err, doc) {
-//     if (err) return res.send(500, {error: err});
-//     return res.send('Succesfully saved.');
-// });
-
    res.render("dashboard",{
      user:req.user
    });
    
 });
 
-router.get("/result",async(req,res)=>{
+router.get("/resultpublish",async(req,res)=>{
  var m=__dirname.slice(0, __dirname.length-7);
   // ejs.render();
   ejs.renderFile(path.join(__dirname.slice(0, __dirname.length-7),"views/report.ejs"),{val:"balajee",currentUser:req.user, success:0, error:0},{},function(err, str) {
@@ -47,7 +36,7 @@ router.get("/result",async(req,res)=>{
       res.render("result.ejs");
     });
   });
-})
+});
 
 router.get(
   "/register",
@@ -77,26 +66,6 @@ router.post(
       const registeredUser = await User.register(user, password);
 
        if(typeof registeredUser!="undefined"){ 
-
-      //  const token=jwt.sign({name,email,password},process.env.JWT_ACC_ACTIVATE,{expiresIn:"20m"})
-
-      //   let transporter = nodemailer.createTransport({
-      //    service:"hotmail",
-      //     auth: {
-      //       user: "codetofun@outlook.com", // generated ethereal user
-      //       pass: "node@1234", // generated ethereal password
-      //     },
-      //   });
-      
-      //   // send mail with defined transport object
-      //   let info = await transporter.sendMail({
-      //     from: '"Balajee👻" <codetofun@outlook.com>', // sender address
-      //     to: email, // list of receivers
-      //     subject: "NewsLetter", // Subject line
-      //     text: "Hello world love you.....love ", // plain text body
-      //     html: `click here to verify <br> <a href="http://localhost:3000/login">${token}</a>` // html body
-      //   });
-      //   req.flash("success", "we have sent an email to you please verify it, it's you");
         res.redirect("/login");
       }
       else{
