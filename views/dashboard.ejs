@@ -16,7 +16,7 @@
                     </div>
                     <div>
                         <input type="radio" name="same" id="dashboard" value="result" class=""
-                            style="margin-left: 10px;">
+                            style="margin-left: 10px;" onClick="JavaScript:radio_inputs('resultpublish')">
                         Result
                     </div>
                     <div>
@@ -30,6 +30,10 @@
         <% } %>
             <script>
                 function radio_input(url) {
+                    // Re-direct the browser to the url value
+                    window.location.href = 'http://localhost:3000/' + url
+                }
+                function radio_inputs(url) {
                     // Re-direct the browser to the url value
                     window.location.href = 'http://localhost:3000/' + url
                 }

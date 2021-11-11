@@ -38,9 +38,11 @@ classofs:{
      type:String,
      required:true
  },
- images: ImageSchema
- 
-     
+ images: ImageSchema,
+ resultShow:{
+  type:Boolean,
+  default:false
+}
 });
 const Detail = mongoose.model('Detail', DetailSchema);
 module.exports = Detail;

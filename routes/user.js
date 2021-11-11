@@ -4,25 +4,33 @@ const User = require("../models/user");
 const AppError = require("../controlError/AppError");
 const wrapAsync = require("../controlError/wrapasync");
 const passport = require("passport");
-const { body,check } = require('express-validator');
+// const { body,check } = require('express-validator');
 const {isLoggedIn}=require("../middleware");
 const { defaultMaxListeners } = require("events");
 const path = require("path");
 var ejs = require('ejs');
 var pdf = require('html-pdf');
 const Mark=require("../models/studentadminside");
-
+// var fetchUrl = require("fetch").fetchUrl;
 
 router.get("/dashboard", async (req, res) => {
    res.render("dashboard",{
      user:req.user
    });
+
+
    
 });
 
-router.get("/resultpublish",async(req,res)=>{
+router.get("/resultpublish",isLoggedIn,wrapAsync(async(req,res)=>{
  const markOfUser=await Mark.find({userId:req.user._id});
+ const pdfName=markOfUser[0].pdf_path;
+ console.log(pdfName);
+ if(pdfName){
+ return res.render("result.ejs",{fileName:pdfName});
+ }
  const {markDetail}=markOfUser[0];
+ const fileName=req.user.name+Date.now() +".pdf";
  const data={val:"balajee",currentUser:req.user, success:0, error:0,result:markDetail};
  var m=__dirname.slice(0, __dirname.length-7);
   ejs.renderFile(path.join(__dirname.slice(0, __dirname.length-7),"views/report.ejs"),data,{},function(err, str) {
@@ -31,13 +39,20 @@ router.get("/resultpublish",async(req,res)=>{
     }
 
     // str now contains your rendered html
-    pdf.create(str).toFile(`${m}/public/report.pdf`, function(err, data) {
+    pdf.create(str).toFile(`${m}/public/${fileName}`, function(err, data) {
       if (err) return res.send(err)
       // res.attachment('report.pdf');
-      res.render("result.ejs");
+      Mark.findOneAndUpdate({userId:req.user._id}, {"pdf_path":fileName}, {upsert: true}, async function(err, doc) {
+        if (err) return res.send(500, {error: err});
+        console.log(await Mark.find({userId:req.user._id}));
+        return res.render("result.ejs",{fileName});
     });
+      
+    });
+    
   });
-});
+  
+}));
 
 
 router.get(

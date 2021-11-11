@@ -19,10 +19,10 @@ const UserSchema = new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    resultShow:{
-        type:Boolean,
-        default:false
-    }
+    // resultShow:{
+    //     type:Boolean,
+    //     default:false
+    // }
    
     
 });

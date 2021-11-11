@@ -4,8 +4,8 @@
         <thead>
             <tr>
                 <th>Roll-Number</th>
-                <th>student-name</th>
-                <th>result upload</th>
+                <th>Student-Name</th>
+                <th>Result Status</th>
             </tr>
         </thead>
         <% if(selected_student) {%>
@@ -19,21 +19,20 @@
                         <td>
                             <%=e.name%>
                         </td>
-                        <%=bool %>
-                            <% if(bool){ %>
-                                <td>
-                                    <a class="btn btn-success" href="#">Uploaded</a>
-                                </td>
-                                <% } else{ %>
 
+                        <% if(e.resultShow){ %>
+                            <td>
+                                <a class="btn btn-success" href="#">Uploaded</a>
+                            </td>
+                            <% } else{ %>
+
+                                <td>
+                                    <a class="btn btn-info" href="/result/markfillup/<%=e.userId%>">Add</a>
+                                </td>
+                                <% } %>
                                     <td>
-                                        <a class="btn btn-danger" href="/result/markfillup/<%=e.userId%> ">Add</a>
+                                        <a class="btn btn-danger" href="/result/delete-result/<%=e.userId%>">Delete</a>
                                     </td>
-                                    <% } %>
-                                        <td>
-                                            <a class="btn btn-danger"
-                                                href="/result/markfillup/<%=e.userId%> ">Delete</a>
-                                        </td>
 
 
                     </tr>

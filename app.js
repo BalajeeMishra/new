@@ -103,10 +103,10 @@ app.use(passport.initialize());
       res.status(statusCode).render("error", { err });
     }
   });
-  app.get('*', (req, res) => {
+  // app.get('*', (req, res) => {
     
-      res.render("please add right route....")
-  });
+  //     res.send("please add right route....")
+  // });
   const PORT = process.env.PORT || 3000;
   
   app.listen(PORT, () => {
