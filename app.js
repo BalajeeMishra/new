@@ -6,7 +6,7 @@ require("dotenv").config();
   const MongoDBStore = require("connect-mongo");
   const flash = require("connect-flash");
   const AppError = require("./controlError/AppError");
-  const cors=require("cors");
+  // const cors=require("cors");
   var pdf = require('html-pdf');
   
   const methodOverride = require("method-override");
@@ -17,6 +17,8 @@ require("dotenv").config();
   const Detail= require("./routes/detail");
   const Result= require("./routes/result");
   const payment = require("./routes/payment");
+  const dues=require("./routes/dues");
+
   mongoose
   .connect("mongodb://localhost:27017/school", {
     useNewUrlParser: true,
@@ -86,7 +88,9 @@ app.use(passport.initialize());
   app.use("/detail", Detail);
   app.use("/result",Result);
   app.use("/", payment);
+  app.use("/dues",dues);
   
+
   const handleValidationErr = (err) => {
     return new AppError("please fill up all the required field carefully", 400);
   };

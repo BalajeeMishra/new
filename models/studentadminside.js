@@ -15,6 +15,10 @@ const SubjectSchema=new mongoose.Schema({
     pdf_path:{
         type:String,
         default:"",
+    },
+    name:{
+        type:String,
+        required:true
     }
   
 });

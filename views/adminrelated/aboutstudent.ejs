@@ -22,7 +22,7 @@
 
                         <% if(e.resultShow){ %>
                             <td>
-                                <a class="btn btn-success" href="#">Uploaded</a>
+                                <a class="btn btn-success" href="/resultpublish/<%=e.userId%>">Uploaded</a>
                             </td>
                             <% } else{ %>
 
@@ -32,6 +32,10 @@
                                 <% } %>
                                     <td>
                                         <a class="btn btn-danger" href="/result/delete-result/<%=e.userId%>">Delete</a>
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-info" href="/dues/detail">Dues Detail</a>
                                     </td>
 
 

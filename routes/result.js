@@ -56,7 +56,6 @@ router.get(
   router.get("/detail",isLoggedIn,isAdmin,async(req,res)=>{
     
   var selected_student=await Detail.find(done);
-  console.log(selected_student);
   res.render("adminrelated/aboutstudent",{selected_student});
   });
   router.get("/markfillup/:id",isLoggedIn,isAdmin,async(req,res)=>{
@@ -71,13 +70,8 @@ router.get(
     for(var i in req.body){
       arrayObj.push({key:i,val:req.body[i]});
     }
-    // arrayObj=[req.body];
-    // console.log(arrayObj);
-    // const result = arrayObj.map((value,i) => {
-    //   let [key, val] = Object.entries(value)[i];
-    //   return {key, val}
-    // });
-    const newMark= new Mark({userId:req.params.id});
+    const userMark= await User.find({_id:req.params.id});
+    const newMark= new Mark({userId:req.params.id,name:userMark[0].name});
     newMark.markDetail=await arrayObj.map(f => ({ subject: f.key, mark: f.val }));
     await newMark.save();
     Detail.findOneAndUpdate({userId:req.params.id}, {"resultShow":true}, {upsert: true}, function(err, doc) {
@@ -91,10 +85,7 @@ router.get(
 });
 
 router.get("/delete-result/:id",isLoggedIn,isAdmin, wrapAsync(async (req, res, next) => {
-  // const { id } = req.params;
   const result=await Mark.find({userId:req.params.id});
-  console.log(result[0]);
-  console.log(result[0]._id);
   const deletedResult = await Mark.findByIdAndDelete(result[0]._id);
   Detail.findOneAndUpdate({userId:req.params.id}, {"resultShow":false}, {upsert: true}, function(err, doc) {
     if (err) return res.send(500, {error: err});

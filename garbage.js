@@ -102,3 +102,11 @@
 //     }
 // }
 // CLIENT_URL=http//localhost:3000/
+
+
+  // arrayObj=[req.body];
+    // console.log(arrayObj);
+    // const result = arrayObj.map((value,i) => {
+    //   let [key, val] = Object.entries(value)[i];
+    //   return {key, val}
+    // });

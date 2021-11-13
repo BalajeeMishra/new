@@ -34,14 +34,16 @@ router.get("/dashboard", async (req, res) => {
    
 });
 
-router.get("/resultpublish",isLoggedIn,wrapAsync(async(req,res)=>{
- const markOfUser=await Mark.find({userId:req.user._id});
+router.get("/resultpublish/:id",isLoggedIn,wrapAsync(async(req,res)=>{
+ const id =req.params.id;
+
+ const markOfUser=await Mark.find({userId:id});
  const pdfName=markOfUser[0].pdf_path;
  if(pdfName){
  return res.render("result.ejs",{fileName:pdfName});
  }
  const {markDetail}=markOfUser[0];
- const fileName=req.user.name+Date.now() +".pdf";
+ const fileName=markOfUser[0].name+Date.now() +".pdf";
  const data={val:"balajee",currentUser:req.user, success:0, error:0,result:markDetail};
  var m=__dirname.slice(0, __dirname.length-7);
   ejs.renderFile(path.join(__dirname.slice(0, __dirname.length-7),"views/report.ejs"),data,{},function(err, str) {
@@ -53,9 +55,8 @@ router.get("/resultpublish",isLoggedIn,wrapAsync(async(req,res)=>{
     pdf.create(str).toFile(`${m}/public/${fileName}`, function(err, data) {
       if (err) return res.send(err)
       // res.attachment('report.pdf');
-      Mark.findOneAndUpdate({userId:req.user._id}, {"pdf_path":fileName}, {upsert: true}, async function(err, doc) {
+      Mark.findOneAndUpdate({userId:id}, {"pdf_path":fileName}, {upsert: true}, async function(err, doc) {
         if (err) return res.send(500, {error: err});
-        console.log(await Mark.find({userId:req.user._id}));
         return res.render("result.ejs",{fileName});
     });
       
