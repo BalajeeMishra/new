@@ -11,7 +11,19 @@ const path = require("path");
 var ejs = require('ejs');
 var pdf = require('html-pdf');
 const Mark=require("../models/studentadminside");
+const Detail = require("../models/Detail");
 // var fetchUrl = require("fetch").fetchUrl;
+
+
+router.get("/",async(req,res)=>{
+  const user=await User.find({"_id":req.user._id});
+  const detail=await Detail.find({userId:req.user._id});
+  const userData=user[0];
+  const detailData=detail[0];
+
+  //  res.send("hello world");
+   res.render("profile",{userData,detailData});
+});
 
 router.get("/dashboard", async (req, res) => {
    res.render("dashboard",{
@@ -25,7 +37,6 @@ router.get("/dashboard", async (req, res) => {
 router.get("/resultpublish",isLoggedIn,wrapAsync(async(req,res)=>{
  const markOfUser=await Mark.find({userId:req.user._id});
  const pdfName=markOfUser[0].pdf_path;
- console.log(pdfName);
  if(pdfName){
  return res.render("result.ejs",{fileName:pdfName});
  }

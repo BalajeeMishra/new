@@ -31,20 +31,21 @@ router.get("/addmoreinformation",isLoggedIn,wrapAsync(async(req,res,next)=>{
     name:req.user.name,
   });
 }));
-
-
 router.post("/addmoreinformation", upload.single("image"),wrapAsync(async(req,res)=>{
     const user= req.user._id;
+    console.log(req.body);
+
     const {age,mobno,birthday,gender,classofs,address,image}=req.body;
     const information= new Detail({age,mobno,birthday,gender,userId:user,classofs,address,image,name:req.user.name});
+    console.log(req.file);
     if(typeof req.file!=undefined){
-    const {path,filename}=req.file;
+    const {path,filename}= req.file;
     information.images={
       url:path,
       filename
     };
   }
     await information.save();
-     res.redirect("/detail");
+    //  res.redirect("/detail");
 }));
 module.exports = router;

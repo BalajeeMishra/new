@@ -16,7 +16,7 @@ require("dotenv").config();
   const Users = require("./routes/user");
   const Detail= require("./routes/detail");
   const Result= require("./routes/result");
-
+  const payment = require("./routes/payment");
   mongoose
   .connect("mongodb://localhost:27017/school", {
     useNewUrlParser: true,
@@ -85,6 +85,7 @@ app.use(passport.initialize());
   app.use("/", Users);
   app.use("/detail", Detail);
   app.use("/result",Result);
+  app.use("/", payment);
   
   const handleValidationErr = (err) => {
     return new AppError("please fill up all the required field carefully", 400);
