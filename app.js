@@ -18,7 +18,7 @@ require("dotenv").config();
   const Result= require("./routes/result");
   const payment = require("./routes/payment");
   const dues=require("./routes/dues");
-
+  const payments = require("./routes/payments");
   mongoose
   .connect("mongodb://localhost:27017/school", {
     useNewUrlParser: true,
@@ -89,6 +89,7 @@ app.use(passport.initialize());
   app.use("/result",Result);
   app.use("/", payment);
   app.use("/dues",dues);
+  app.use("/payment", payments);
   
 
   const handleValidationErr = (err) => {

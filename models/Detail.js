@@ -1,11 +1,9 @@
 
 const mongoose = require("mongoose");
-
 const ImageSchema = new mongoose.Schema({
   url: String,
   filename: String
 });
-
 const DetailSchema = new mongoose.Schema({
   name: {
     type: String,

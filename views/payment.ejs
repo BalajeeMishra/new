@@ -1,0 +1,42 @@
+<%- include("./layouts/header"); -%>
+    <div class="payment">
+        <h5>Payment Detail</h5>
+        <hr>
+        <hr>
+        <div>
+            <p>
+                <%=nameofmonth %>-10
+            </p>
+        </div>
+        <hr>
+        <div>
+            <p>Back Dues- 0</p>
+        </div>
+        <hr>
+        <div>
+            <p>Total-10 <% %>
+            </p>
+        </div>
+        <hr>
+        <form method="post" action="/payment/pay" class="needs-validation">
+            <div class="form-group mb-3">
+                <label for="paided" class="form-label"></label>
+                <input type="number" name="paided" class="form-control" id="paided" placeholder="Enter amount to pay:"
+                    required>
+                <button class="btn btn-success ">Pay Now</button>
+            </div>
+        </form>
+        <!-- <div id="div2"></div> -->
+    </div>
+    <!-- <script type="text/JavaScript">
+        // function addText()
+        // {
+        // var div1=document.getElementById("div2");
+        // div1.innerHTML="<input class='in' type='text' value='30' placeholder='sone'>";
+        // var val=document.querySelector("input").value;
+        // console.log(div1.innerHTML);
+        // }
+
+
+        </script> -->
+    <%- include("./layouts/footer"); -%>
