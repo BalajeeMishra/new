@@ -9,6 +9,7 @@ const wrapAsync = require("../controlError/wrapasync");
 const User=require("../models/user");
 const Mark=require("../models/studentadminside");
 const Dues=require("../models/dues");
+const MonthlyPlan=require("../models/monthly");
 paypal.configure({
   mode: "sandbox", //sandbox or live
   client_id: 'AaDj1YMVe67NhG_QpfHP9gHqAFkk39joVHT6FXvPYWdJv91gbARHR-zq55BIYjVGY2ElUzo5F77EHo7l',

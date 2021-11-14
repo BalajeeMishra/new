@@ -16,10 +16,17 @@ const SubjectSchema=new mongoose.Schema({
         type:String,
         default:"",
     },
+    // class:{
+    //     type:String
+    // },
     name:{
         type:String,
         required:true
-    }
+    },
+    monthly:[{
+      class:String,
+      fees:Number
+    }]
   
 });
 const Mark=mongoose.model("Mark",SubjectSchema);

@@ -10,31 +10,7 @@ const { Router } = require("express");
 const Mark=require("../models/studentadminside");
 const multer = require('multer')
 var done;
-// const multerStorage= multer.diskStorage({
-//   destination:(req,file,cb)=>{
-//      cb(null,"public"); 
-//   },
-//   filename: (req, file, cb) => {
-//    const fileName = file.originalname.toLowerCase().split(' ').join('-');
-//    cb(null,fileName);
-//    // const ext =file.mimetype.split("/")[1];
-//    // cb(null, `files\admin-${file.fieldname}-${Date.now()}.${ext}`);
-//  }
-// });
 
-
-
-// const upload = multer({
-// storage: multerStorage,
-// fileFilter: (req, file, cb) => {
-//    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-//        cb(null, true);
-//    } else {
-//        cb(null, false);
-//        return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
-//    }
-// }
-// });
 
 
 router.get("/",isLoggedIn,isAdmin,(req,res)=>{
@@ -92,6 +68,7 @@ router.get("/delete-result/:id",isLoggedIn,isAdmin, wrapAsync(async (req, res, n
     return res.redirect("/result/detail");
 });
 }));
-  
+
+
 
 module.exports=router;

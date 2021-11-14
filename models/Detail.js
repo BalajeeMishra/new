@@ -40,7 +40,8 @@ classofs:{
  resultShow:{
   type:Boolean,
   default:false
-}
+},
+
 });
 const Detail = mongoose.model('Detail', DetailSchema);
 module.exports = Detail;
