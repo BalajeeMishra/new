@@ -10,7 +10,8 @@ const multer = require('multer');
 const { storage } = require("../cloudinary/index");
 const upload = multer({ storage });
 const { cloudinary } = require("../cloudinary");
-
+const MonthlyPlan=require("../models/monthly");
+const Dues=require("../models/dues");
 router.get("/",isLoggedIn,wrapAsync(async(req,res)=>{
      res.render("afterdetail");
 }));
@@ -33,11 +34,8 @@ router.get("/addmoreinformation",isLoggedIn,wrapAsync(async(req,res,next)=>{
 }));
 router.post("/addmoreinformation", upload.single("image"),wrapAsync(async(req,res)=>{
     const user= req.user._id;
-    console.log(req.body);
-
     const {age,mobno,birthday,gender,classofs,address,image}=req.body;
     const information= new Detail({age,mobno,birthday,gender,userId:user,classofs,address,image,name:req.user.name});
-    console.log(req.file);
     if(typeof req.file!=undefined){
     const {path,filename}= req.file;
     information.images={
@@ -46,6 +44,27 @@ router.post("/addmoreinformation", upload.single("image"),wrapAsync(async(req,re
     };
   }
     await information.save();
-    //  res.redirect("/detail");
+
+ console.log(information);
+
+
+    var fees;
+  
+   const nameDetail= await Detail.find({userId:req.user._id});
+   const standard= nameDetail[0].classofs;
+   const monthlyplan=await MonthlyPlan.find({});
+   const monthly=monthlyplan[0].monthly;
+     monthly.forEach(e => {
+         if(e.class==standard){
+              fees=e.fees;
+         }
+     });
+   const newDuesPage=new Dues({userId:req.user._id,name:req.user.name});
+   const arrayObj=[{
+   }];
+   arrayObj[0].val=fees;
+   newDuesPage.feesDetail=await arrayObj.map(f => ({ valuetopaid:f.val  }));
+  await newDuesPage.save();
+  console.log(newDuesPage);
 }));
 module.exports = router;

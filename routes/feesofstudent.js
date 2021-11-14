@@ -50,8 +50,9 @@ router.get("/fees-menu",isLoggedIn,isAdmin,wrapAsync(async(req,res)=>{
             fees: 100
         },
     ];
-    if(!await MonthlyPlan.find({})){
-
+    
+    if( (await MonthlyPlan.find({})).length==0){
+      
     const newMonthlyPlan=new MonthlyPlan({});
     newMonthlyPlan.monthly=await fees_setting.map(f => ({class: f.class, fees: f.fees }));
     await newMonthlyPlan.save();
@@ -59,7 +60,6 @@ router.get("/fees-menu",isLoggedIn,isAdmin,wrapAsync(async(req,res)=>{
         if (err) return res.send(500, {error: err});
         return res.send("hello");
     });
-    
     }
     return res.send("already created");
 }));

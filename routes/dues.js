@@ -9,6 +9,7 @@ const User=require("../models/user");
 const { Router } = require("express");
 const Mark=require("../models/studentadminside");
 const Dues=require("../models/dues");
+const MonthlyPlan=require("../models/monthly");
 var x=100;
 var date=new Date();
 var month=new Array();
@@ -31,7 +32,19 @@ router.get("/detail",(req,res)=>{
 });
 
 router.get("/all",async(req,res)=>{
-    const newPayment=await Dues.find({});
-    res.render("payment",{nameofmonth});
+
+    var fees;
+    const nameDetail= await Detail.find({userId:req.user._id});
+    const standard= nameDetail[0].classofs;
+    const monthlyplan=await MonthlyPlan.find({});
+    const monthly=monthlyplan[0].monthly;
+    // const newPayment=await Dues.find({userId:req.u});
+    monthly.forEach(e => {
+        if(e.class==standard){
+             fees=e.fees;
+        }
+    });
+    
+    res.render("payment",{nameofmonth,fees});
 });
 module.exports = router;
