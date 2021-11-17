@@ -6,7 +6,7 @@ require("dotenv").config();
   const MongoDBStore = require("connect-mongo");
   const flash = require("connect-flash");
   const AppError = require("./controlError/AppError");
-  // const cors=require("cors");
+   const cors=require("cors");
   var pdf = require('html-pdf');
   
   const methodOverride = require("method-override");
@@ -40,6 +40,7 @@ require("dotenv").config();
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(methodOverride("_method"));
+  app.use(cors());
 //   app.use(express.static(path.join(__dirname, "public")));
   
   const store = new MongoDBStore({
@@ -93,6 +94,7 @@ app.use(passport.initialize());
   app.use("/payment", payments);
   app.use("/student",feesofstudent);
 
+
   const handleValidationErr = (err) => {
     return new AppError("please fill up all the required field carefully", 400);
   };
@@ -110,6 +112,8 @@ app.use(passport.initialize());
       res.status(statusCode).render("error", { err });
     }
   });
+  
+
   // app.get('*', (req, res) => {
     
   //     res.send("please add right route....")

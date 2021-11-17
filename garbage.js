@@ -137,3 +137,55 @@
 //    }
 // }
 // });
+
+
+
+
+
+//  console.log(typeof fees);
+  
+//  var fees;
+//  const paiddnow=req.body.paided;
+//   const nameDetail= await Detail.find({userId:req.user._id});
+//   const standard= nameDetail[0].classofs;
+//   const monthlyplan=await MonthlyPlan.find({});
+//   const monthly=monthlyplan[0].monthly;
+//     // const newPayment=await Dues.find({userId:req.u});
+//     monthly.forEach(e => {
+//         if(e.class==standard){
+//              fees=e.fees;
+//         }
+//     });
+
+//   const arrayObj=[req.body];
+//   const newDuesPage=new Dues({userId:req.user._id,name:req.user.name});
+//   console.log(newDuesPage);
+//   const dues=fees-paiddnow;
+//   newDuesPage.feesDetail=await arrayObj.map(f => ({paided: f.paided }));
+//   await newDuesPage.save();
+
+
+// <!-- <script type="text/JavaScript">
+        // function addText()
+        // {
+        // var div1=document.getElementById("div2");
+        // div1.innerHTML="<input class='in' type='text' value='30' placeholder='sone'>";
+        // var val=document.querySelector("input").value;
+        // console.log(div1.innerHTML);
+        // }
+
+
+
+         // var datas = Object.fromEntries(new FormData(e.target).entries());
+            // console.log("hello", datas);
+            // fetch("/detail/addmoreinformation", {
+            //     method: "POST",
+            //     body:
+            //         datas
+
+            // })
+            //     .then(response => response.json())
+            //     .then(json => console.log(json))
+            //     .catch((e) => console.log(e));
+
+            // window.location.href = 'http://localhost:3000/result/student';

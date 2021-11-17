@@ -32,19 +32,24 @@ router.get("/detail",(req,res)=>{
 });
 
 router.get("/all",async(req,res)=>{
-
+   
     var fees;
     const nameDetail= await Detail.find({userId:req.user._id});
-    const standard= nameDetail[0].classofs;
+    const duesDetail=await Dues.find({userId:req.user._id});
+    const duesBack=duesDetail[0].feesDetail[0].dues;
     const monthlyplan=await MonthlyPlan.find({});
     const monthly=monthlyplan[0].monthly;
-    // const newPayment=await Dues.find({userId:req.u});
+    const standard=nameDetail[0].classofs;
     monthly.forEach(e => {
         if(e.class==standard){
              fees=e.fees;
         }
     });
-    
-    res.render("payment",{nameofmonth,fees});
+    const total=duesBack+fees;
+    Dues.findOneAndUpdate({userId:req.user._id}, {"duesDetail[0].feesDetail[0].total":duesBack+fees}, {upsert: true}, function(err, doc) {
+        if (err) return res.send(500, {error: err});
+        return res.render("payment",{nameofmonth,fees,duesBack,total});
+    });
+   
 });
 module.exports = router;

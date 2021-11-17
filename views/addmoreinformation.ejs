@@ -101,7 +101,7 @@
         </div>
     </div>
     <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
+
         (function () {
             'use strict'
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -112,7 +112,6 @@
                 .forEach(function (form) {
                     form.addEventListener('submit', function (event) {
                         event.preventDefault();
-
                         fun(event);
                         if (!form.checkValidity()) {
                             event.preventDefault()
@@ -136,20 +135,6 @@
 
         function fun(e) {
 
-            // var datas = Object.fromEntries(new FormData(e.target).entries());
-            // console.log("hello", datas);
-            // fetch("/detail/addmoreinformation", {
-            //     method: "POST",
-            //     body:
-            //         datas
-
-            // })
-            //     .then(response => response.json())
-            //     .then(json => console.log(json))
-            //     .catch((e) => console.log(e));
-
-            // window.location.href = 'http://localhost:3000/result/student';
-
             var form = document.querySelector('form')
             console.log(new FormData(form));
             return fetch("/detail/addmoreinformation", {
@@ -166,17 +151,7 @@
         function radio_input(url) {
             window.location.href = 'http://localhost:3000/' + url
         }
-        // function radio_inputs() {
-        //     fetch("/pay", {
-        //         method: "POST",
-        //         // headers: { request: "no-cors" },
-        //         body: {}
-        //     })
-        //         .then(response => response.json())
-        //         .then(json => console.log(json))
-        //         .catch((e) => console.log(e));
-        //     // window.location.href = 'http://localhost:3000/' + url
-        // }
+
     </script>
 
     <%- include("./layouts/footer"); -%>
