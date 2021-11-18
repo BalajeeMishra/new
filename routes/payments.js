@@ -3,6 +3,9 @@ const router = express.Router();
 const Razorpay = require("razorpay");
 const shortid = require('shortid');
 const Dues=require("../models/dues");
+var pdf = require('html-pdf');
+const path = require("path");
+var ejs = require('ejs');
 let order_id_variable;
 var sessData;
 var date=new Date();
@@ -64,10 +67,42 @@ router.post("/is-order-complete",async(req,res)=>{
       return res.send(err);
   }
 });
-return res.send("success");
+return res.redirect("/payment/pdf_detail");
 
 		};
 		return res.send("cancel");
 	})
 })
+
+
+router.get("/pdf_detail",async(req,res)=>{
+	const duesDetail=await Dues.find({userId:req.user._id});
+	const pdfName=duesDetail.pdf_path;
+	if(pdfName){
+	return res.render("paymentShow.ejs",{fileName:pdfName});
+	}
+	const {paymentDetail}=duesDetail[0];
+	const fileName=duesDetail[0].name+Date.now() +".pdf";
+	const data={currentUser:req.user, success:0, error:0,payment:paymentDetail};
+	var m=__dirname.slice(0, __dirname.length-7);
+	 ejs.renderFile(path.join(__dirname.slice(0, __dirname.length-7),"views/paymentDetail.ejs"),data,{},function(err, str) {
+	   if (err) { console.log(err);
+		return res.send(err).status(400);
+	   }
+   
+	   // str now contains your rendered html
+	   pdf.create(str).toFile(`${m}/public/${fileName}`, function(err, data) {
+		 if (err) return res.send(err)
+		 Dues.findOneAndUpdate({userId:req.user._id}, {"pdf_path":fileName}, {upsert: true}, async function(err, doc) {
+		   if (err) return res.send(500, {error: err});
+		   return res.render("paymentShow.ejs",{fileName});
+	   });
+		 
+	   });
+	 });
+})
+
+
+
+
 module.exports = router;

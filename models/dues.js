@@ -42,7 +42,6 @@ const DuesSchema=new mongoose.Schema({
             type:Number,
             default:0,
         },
-
         totalpaidedyet:{
             type:Number,
             default:0,
@@ -54,10 +53,10 @@ const DuesSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    // pdf_path:{
-    //     type:String,
-    //     default:"",
-    // },
+    pdf_path:{
+        type:String,
+        default:"",
+    },
     name:{
         type:String,
         // required:true

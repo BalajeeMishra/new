@@ -34,7 +34,6 @@ router.get("/detail",(req,res)=>{
 
 router.get("/all",async(req,res)=>{
      const count=req.session.count;
-     console.log(count);
     const nameDetail= await Detail.find({userId:req.user._id});
     const duesDetail=await Dues.find({userId:req.user._id});
     const duesBack=duesDetail[0].feesDetail[0].dues;
@@ -44,7 +43,6 @@ router.get("/all",async(req,res)=>{
     var fees=duesDetail[0].feesDetail[0].valuetopaid;
     const total=duesBack+fees;
     const comment_id=duesDetail[0].feesDetail[0]._id;
-    //  return res.render("payment",{nameofmonth,fees,duesBack,total});
 Dues.update({'feesDetail._id': comment_id},
 {'$set': {
        'feesDetail.$.total': total,
@@ -53,7 +51,6 @@ Dues.update({'feesDetail._id': comment_id},
      if(err){
       return res.send(err);
   }
-  console.log(typeof count);
   return res.render("payment",{nameofmonth,fees,duesBack,total,count}) ;
 });
 });

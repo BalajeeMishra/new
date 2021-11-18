@@ -1,14 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const paypal = require("paypal-rest-sdk");
+const RegistrationStatus=require("../models/registration");
 paypal.configure({
   mode: "sandbox", //sandbox or live
   client_id: 'AaDj1YMVe67NhG_QpfHP9gHqAFkk39joVHT6FXvPYWdJv91gbARHR-zq55BIYjVGY2ElUzo5F77EHo7l',
   client_secret: 'EMz97ri2AOTA06J4SIcORBpaQK4FrZOYI9RvLKLlwuzNO6dnpUY5L5O05gbaQGrX2xdls9UqIgTVny1G',
 });
 
-router.get("/success", (req, res) => {
- 
+router.get("/success", async(req, res) => {
+  const newRegistrationStatus= new RegistrationStatus({userId:req.user._id});
+  await newRegistrationStatus.save();
+  const registration= await RegistrationStatus.find({userId:req.user._id});
+  RegistrationStatus.findOneAndUpdate({userId:req.user._id}, {"status":true}, {upsert: true}, async function(err, doc) {
+    if (err) return res.send(500, {error: err});
+    // return res.render("result.ejs",{fileName});
+});
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
   const execute_payment_json = {
@@ -40,7 +47,6 @@ router.get("/success", (req, res) => {
 });
 
 router.post("/pay", (req, res) => {
-  console.log("hii balajee.....")
   const create_payment_json = {
     intent: "sale",
     payer: {

@@ -20,8 +20,6 @@ router.get("/",async(req,res)=>{
   const detail=await Detail.find({userId:req.user._id});
   const userData=user[0];
   const detailData=detail[0];
-
-  //  res.send("hello world");
    res.render("profile",{userData,detailData});
 });
 

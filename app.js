@@ -22,7 +22,7 @@ require("dotenv").config();
   const dues=require("./routes/dues");
   const payments = require("./routes/payments");
   const feesofstudent=require("./routes/feesofstudent");
-
+  const registration=require("./routes/registration");
   //mongoose connect
   mongoose
   .connect("mongodb://localhost:27017/school", {
@@ -107,6 +107,7 @@ app.use(passport.initialize());
   app.use("/dues",dues);
   app.use("/payment", payments);
   app.use("/student",feesofstudent);
+  app.use("/registration",registration);
 
 // error handling with middleware
   const handleValidationErr = (err) => {
@@ -133,4 +134,3 @@ app.use(passport.initialize());
   app.listen(PORT, () => {
     console.log("APP IS LISTENING ON PORT");
   });
-  

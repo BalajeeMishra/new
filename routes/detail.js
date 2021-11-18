@@ -33,7 +33,6 @@ router.get("/addmoreinformation",isLoggedIn,wrapAsync(async(req,res,next)=>{
   });
 }));
 router.post("/addmoreinformation", upload.single("image"),wrapAsync(async(req,res)=>{
- 
     const user= req.user._id;
     const {age,mobno,birthday,gender,classofs,address,image}=req.body;
     const information= new Detail({age,mobno,birthday,gender,userId:user,classofs,address,image,name:req.user.name});
@@ -45,9 +44,6 @@ router.post("/addmoreinformation", upload.single("image"),wrapAsync(async(req,re
     };
   }
     await information.save();
-
- 
-
     var fees;
   
    const nameDetail= await Detail.find({userId:req.user._id});

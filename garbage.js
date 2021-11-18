@@ -208,3 +208,9 @@
     //          fees=e.fees;
     //     }
     // });
+
+
+     // document.querySelector('form').addEventListener('submit', (e) => {
+        //     data = Object.fromEntries(new FormData(e.target).entries());
+        //     // console.log(data)
+        // });
