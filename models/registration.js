@@ -8,8 +8,15 @@ const RegistrationSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-      
-    });
+      registrationNumber:{
+          type:String,
+          unique:true,
+      },
+    },
+    {
+        timestamps: true
+      }
+    );
 
 const RegistrationStatus=mongoose.model("RegistrationStatus",RegistrationSchema);
 module.exports= RegistrationStatus;
