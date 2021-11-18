@@ -11,8 +11,6 @@ const Mark=require("../models/studentadminside");
 const multer = require('multer')
 var done;
 
-
-
 router.get("/",isLoggedIn,isAdmin,(req,res)=>{
   res.send("result uploaded successfully...");
 });

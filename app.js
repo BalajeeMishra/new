@@ -12,6 +12,8 @@ require("dotenv").config();
   const methodOverride = require("method-override");
   const passport = require("passport");
   const LocalStrategy = require("passport-local");
+
+  //importing models and routes
   const User = require("./models/user");
   const Users = require("./routes/user");
   const Detail= require("./routes/detail");
@@ -20,6 +22,8 @@ require("dotenv").config();
   const dues=require("./routes/dues");
   const payments = require("./routes/payments");
   const feesofstudent=require("./routes/feesofstudent");
+
+  //mongoose connect
   mongoose
   .connect("mongodb://localhost:27017/school", {
     useNewUrlParser: true,
@@ -33,6 +37,9 @@ require("dotenv").config();
     console.log(err);
   });
   const app = express();
+
+
+  //middleware
   app.set("view engine", "ejs");
   app.set("views", path.join(__dirname, "views"));
   app.use(express.static(__dirname + "/public"));
@@ -42,6 +49,8 @@ require("dotenv").config();
   app.use(methodOverride("_method"));
   app.use(cors());
   
+
+  //storing session in mongoose
   const store = new MongoDBStore({
     mongoUrl:"mongodb://localhost:27017/school",
     secret: "thisshouldbeabettersecret!",
@@ -51,7 +60,8 @@ require("dotenv").config();
   store.on("error", function (e) {
     console.log("SESSION STORE ERROR", e);
   });
-  
+
+  //sessionconfiguration
   const sessionConfig = {
     store,
     secret: "thisshouldbeabettersecret!",
@@ -66,6 +76,8 @@ require("dotenv").config();
   
   app.use(session(sessionConfig));
   app.use(flash());
+
+  //using passport
 app.use(passport.initialize());
   app.use(passport.session());
   passport.use(new LocalStrategy({
@@ -77,7 +89,9 @@ app.use(passport.initialize());
   });
   passport.deserializeUser(function(user, done) {
     done(null, user);
-  });  
+  }); 
+
+  //middleware to storing local data....
   app.use((req, res, next) => {
      res.locals.currentUser = req.user||false;
     res.locals.success = req.flash("success")||false;
@@ -94,7 +108,7 @@ app.use(passport.initialize());
   app.use("/payment", payments);
   app.use("/student",feesofstudent);
 
-
+// error handling with middleware
   const handleValidationErr = (err) => {
     return new AppError("please fill up all the required field carefully", 400);
   };
@@ -115,6 +129,7 @@ app.use(passport.initialize());
   
   const PORT = process.env.PORT || 3000;
   
+  //listening
   app.listen(PORT, () => {
     console.log("APP IS LISTENING ON PORT");
   });

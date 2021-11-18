@@ -10,6 +10,7 @@ const { Router } = require("express");
 const Mark=require("../models/studentadminside");
 const Dues=require("../models/dues");
 const MonthlyPlan=require("../models/monthly");
+var sessData;
 var x=100;
 var date=new Date();
 var month=new Array();
@@ -32,19 +33,15 @@ router.get("/detail",(req,res)=>{
 });
 
 router.get("/all",async(req,res)=>{
-    console.log(currentMonth);
-    var fees;
+     const count=req.session.count;
+     console.log(count);
     const nameDetail= await Detail.find({userId:req.user._id});
     const duesDetail=await Dues.find({userId:req.user._id});
     const duesBack=duesDetail[0].feesDetail[0].dues;
     const monthlyplan=await MonthlyPlan.find({});
     const monthly=monthlyplan[0].monthly;
     const standard=nameDetail[0].classofs;
-    monthly.forEach(e => {
-        if(e.class==standard){
-             fees=e.fees;
-        }
-    });
+    var fees=duesDetail[0].feesDetail[0].valuetopaid;
     const total=duesBack+fees;
     const comment_id=duesDetail[0].feesDetail[0]._id;
     //  return res.render("payment",{nameofmonth,fees,duesBack,total});
@@ -56,8 +53,8 @@ Dues.update({'feesDetail._id': comment_id},
      if(err){
       return res.send(err);
   }
-
-  return res.render("payment",{nameofmonth,fees,duesBack,total}) ;
+  console.log(typeof count);
+  return res.render("payment",{nameofmonth,fees,duesBack,total,count}) ;
 });
 });
 module.exports = router;

@@ -200,3 +200,11 @@
             //       </main>
             //       <% } %>
             //           <% } %>
+
+
+
+             // monthly.forEach(e => {
+    //     if(e.class==standard){
+    //          fees=e.fees;
+    //     }
+    // });
