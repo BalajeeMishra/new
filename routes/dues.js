@@ -32,7 +32,7 @@ router.get("/detail",(req,res)=>{
 });
 
 router.get("/all",async(req,res)=>{
-   
+    console.log(currentMonth);
     var fees;
     const nameDetail= await Detail.find({userId:req.user._id});
     const duesDetail=await Dues.find({userId:req.user._id});
@@ -46,10 +46,18 @@ router.get("/all",async(req,res)=>{
         }
     });
     const total=duesBack+fees;
-    Dues.findOneAndUpdate({userId:req.user._id}, {"duesDetail[0].feesDetail[0].total":duesBack+fees}, {upsert: true}, function(err, doc) {
-        if (err) return res.send(500, {error: err});
-        return res.render("payment",{nameofmonth,fees,duesBack,total});
-    });
-   
+    const comment_id=duesDetail[0].feesDetail[0]._id;
+    //  return res.render("payment",{nameofmonth,fees,duesBack,total});
+Dues.update({'feesDetail._id': comment_id},
+{'$set': {
+       'feesDetail.$.total': total,
+ }},
+    function(err,model) {
+     if(err){
+      return res.send(err);
+  }
+
+  return res.render("payment",{nameofmonth,fees,duesBack,total}) ;
+});
 });
 module.exports = router;

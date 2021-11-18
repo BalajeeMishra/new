@@ -41,7 +41,6 @@ require("dotenv").config();
   app.use(express.json());
   app.use(methodOverride("_method"));
   app.use(cors());
-//   app.use(express.static(path.join(__dirname, "public")));
   
   const store = new MongoDBStore({
     mongoUrl:"mongodb://localhost:27017/school",
@@ -80,11 +79,12 @@ app.use(passport.initialize());
     done(null, user);
   });  
   app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
+     res.locals.currentUser = req.user||false;
     res.locals.success = req.flash("success")||false;
     res.locals.error = req.flash("error")||false;
     next();   
   });
+ 
   //routes part.
   app.use("/", Users);
   app.use("/detail", Detail);
@@ -113,11 +113,6 @@ app.use(passport.initialize());
     }
   });
   
-
-  // app.get('*', (req, res) => {
-    
-  //     res.send("please add right route....")
-  // });
   const PORT = process.env.PORT || 3000;
   
   app.listen(PORT, () => {

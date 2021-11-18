@@ -22,7 +22,7 @@
         <div class="container header-text">
             <a class="navbar-brand" href="/">school</a>
             <div class="navbar-nav " style="display: flex; flex-direction: row; ">
-                <% if(!currentUser) {%>
+                <% if(typeof currentUser==undefined) {%>
                     <div>
                         <a href="/register" class="nav-link " style="margin-right: 15px;">Register</a>
                     </div>
@@ -35,8 +35,3 @@
             </div>
         </div>
     </nav>
-    <% if(success[0]||error[0]){ %>
-        <main class="container mt-3">
-            <%- include("./flash"); -%>
-        </main>
-        <% } %>

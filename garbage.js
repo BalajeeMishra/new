@@ -189,3 +189,14 @@
             //     .catch((e) => console.log(e));
 
             // window.location.href = 'http://localhost:3000/result/student';
+
+
+
+            // from header
+            // <% if(typeof success!=undefined || typeof error!=undefined ){ %>
+            //   <% if(success[0]||error[0]){ %>
+            //       <main class="container mt-3">
+            //           <%- include("./flash"); -%>
+            //       </main>
+            //       <% } %>
+            //           <% } %>
