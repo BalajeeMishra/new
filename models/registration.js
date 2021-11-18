@@ -12,6 +12,12 @@ const RegistrationSchema=new mongoose.Schema({
           type:String,
           unique:true,
       },
+      name:{
+        type:String,
+      },
+      mobno:{
+        type:Number
+      },
     },
     {
         timestamps: true

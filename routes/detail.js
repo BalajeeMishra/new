@@ -12,6 +12,7 @@ const upload = multer({ storage });
 const { cloudinary } = require("../cloudinary");
 const MonthlyPlan=require("../models/monthly");
 const Dues=require("../models/dues");
+const RegistrationStatus=require("../models/registration");
 router.get("/",isLoggedIn,wrapAsync(async(req,res)=>{
      res.render("afterdetail");
 }));
@@ -61,6 +62,9 @@ router.post("/addmoreinformation", upload.single("image"),wrapAsync(async(req,re
    arrayObj[0].val=fees;
    newDuesPage.feesDetail=await arrayObj.map(f => ({ valuetopaid:f.val  }));
   await newDuesPage.save();
+
+  const newRegistrationStatus= new RegistrationStatus({userId:req.user._id,name:req.user.name,mobno});
+  await newRegistrationStatus.save();
   
 }));
 module.exports = router;

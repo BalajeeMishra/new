@@ -12,13 +12,10 @@ router.get("/success", async(req, res) => {
 
   //this part we need to feex i  mean  on other places....
   const registrationNumber =req.user.name+ Date.now();
-  const newRegistrationStatus= new RegistrationStatus({userId:req.user._id,registrationNumber:registrationNumber});
-  await newRegistrationStatus.save();
   const registration= await RegistrationStatus.find({userId:req.user._id});
-  RegistrationStatus.findOneAndUpdate({userId:req.user._id}, {"status":true}, {upsert: true}, async function(err, doc) {
+  RegistrationStatus.findOneAndUpdate({userId:req.user._id}, {"status":true,"registrationNumber":registrationNumber}, {upsert: true}, async function(err, doc) {
     if (err) return res.send(500, {error: err});
 });
-
 
 
 
