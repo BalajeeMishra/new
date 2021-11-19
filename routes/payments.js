@@ -6,6 +6,7 @@ const Dues=require("../models/dues");
 var pdf = require('html-pdf');
 const path = require("path");
 var ejs = require('ejs');
+const RegistrationStatus=require("../models/registration");
 let order_id_variable;
 var sessData;
 var date=new Date();
@@ -102,6 +103,16 @@ router.get("/pdf_detail",async(req,res)=>{
 	 });
 })
 
+
+router.get("/entered_detail",async(req,res)=>{
+	
+	res.render("adminrelated/feesatadmin");
+
+});
+router.post("/entered_detail",async(req,res)=>{
+  const findByRegistration= await RegistrationStatus.find(req.body);
+  res.redirect("/dues/all");
+});
 
 
 
