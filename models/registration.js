@@ -18,6 +18,9 @@ const RegistrationSchema=new mongoose.Schema({
       mobno:{
         type:Number
       },
+      payment_timing: {
+        type: Date
+    },
     },
     {
         timestamps: true

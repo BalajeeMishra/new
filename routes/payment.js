@@ -8,16 +8,23 @@ paypal.configure({
   client_secret: 'EMz97ri2AOTA06J4SIcORBpaQK4FrZOYI9RvLKLlwuzNO6dnpUY5L5O05gbaQGrX2xdls9UqIgTVny1G',
 });
 
+const moment=require("moment");
+
+var date= new Date();
+// var year = date.getFullYear();
+// var month = String(date.getMonth() + 1).padStart(2,'0');
+// var todayDate = String(date.getDate()).padStart(2, '0');
+// var datePattern =  todayDate + '-'  + month + '-' + year;
+// "payment_timing":datePattern
+
 router.get("/success", async(req, res) => {
 
   //this part we need to feex i  mean  on other places....
   const registrationNumber =req.user.name+ Date.now();
   const registration= await RegistrationStatus.find({userId:req.user._id});
-  RegistrationStatus.findOneAndUpdate({userId:req.user._id}, {"status":true,"registrationNumber":registrationNumber}, {upsert: true}, async function(err, doc) {
+  RegistrationStatus.findOneAndUpdate({userId:req.user._id}, {"status":true,"registrationNumber":registrationNumber,"payment_timing":date}, {upsert: true}, async function(err, doc) {
     if (err) return res.send(500, {error: err});
 });
-
-
 
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;

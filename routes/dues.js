@@ -60,4 +60,7 @@ Dues.update({'feesDetail._id': comment_id},
   return res.render("payment",{nameofmonth,fees,duesBack,total,count}) ;
 });
 });
+
+
+
 module.exports = router;

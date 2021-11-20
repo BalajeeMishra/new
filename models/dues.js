@@ -60,8 +60,14 @@ const DuesSchema=new mongoose.Schema({
     name:{
         type:String,
         // required:true
-    }
+    },
   
-});
+},
+{
+    timestamps: true
+  }
+
+
+);
 const Dues=mongoose.model("Dues",DuesSchema);
 module.exports=Dues;
