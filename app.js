@@ -23,6 +23,9 @@ require("dotenv").config();
   const payments = require("./routes/payments");
   const feesofstudent=require("./routes/feesofstudent");
   const registration=require("./routes/registration");
+  const Admin=require("./routes/admincontrol");
+
+  // let admin;
   //mongoose connect
   mongoose
   .connect("mongodb://localhost:27017/school", {
@@ -93,7 +96,7 @@ app.use(passport.initialize());
 
   //middleware to storing local data....
   app.use((req, res, next) => {
-     res.locals.currentUser = req.user||false;
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash("success")||false;
     res.locals.error = req.flash("error")||false;
     next();   
@@ -108,6 +111,7 @@ app.use(passport.initialize());
   app.use("/payment", payments);
   app.use("/student",feesofstudent);
   app.use("/registration",registration);
+  app.use("/admin",Admin);
 
 // error handling with middleware
   const handleValidationErr = (err) => {

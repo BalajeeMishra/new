@@ -105,9 +105,7 @@ router.get("/pdf_detail",async(req,res)=>{
 
 
 router.get("/entered_detail",async(req,res)=>{
-	
 	res.render("adminrelated/feesatadmin");
-
 });
 router.post("/entered_detail",async(req,res)=>{
   const findByRegistration= await RegistrationStatus.find(req.body);

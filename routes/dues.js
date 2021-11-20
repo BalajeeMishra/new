@@ -33,8 +33,13 @@ router.get("/detail",(req,res)=>{
 });
 
 router.get("/all",async(req,res)=>{
-     const count=req.session.count;
+    const count=req.session.count;
     const nameDetail= await Detail.find({userId:req.user._id});
+   
+    if(typeof nameDetail[0] =="undefined"){
+        return res.send("first do your registration");
+     }
+
     const duesDetail=await Dues.find({userId:req.user._id});
     const duesBack=duesDetail[0].feesDetail[0].dues;
     const monthlyplan=await MonthlyPlan.find({});
@@ -43,6 +48,7 @@ router.get("/all",async(req,res)=>{
     var fees=duesDetail[0].feesDetail[0].valuetopaid;
     const total=duesBack+fees;
     const comment_id=duesDetail[0].feesDetail[0]._id;
+
 Dues.update({'feesDetail._id': comment_id},
 {'$set': {
        'feesDetail.$.total': total,

@@ -16,11 +16,12 @@ const Detail = require("../models/Detail");
 
 
 router.get("/",async(req,res)=>{
-  const user=await User.find({"_id":req.user._id});
-  const detail=await Detail.find({userId:req.user._id});
-  const userData=user[0];
-  const detailData=detail[0];
-   res.render("profile",{userData,detailData});
+  // const user=await User.find({"_id":req.user._id});
+  // const detail=await Detail.find({userId:req.user._id});
+  // const userData=user[0];
+  // const detailData=detail[0];
+  //  res.render("profile",{userData,detailData});
+  res.render("school");
 });
 
 router.get("/dashboard", async (req, res) => {
@@ -34,8 +35,10 @@ router.get("/dashboard", async (req, res) => {
 
 router.get("/resultpublish/:id",isLoggedIn,wrapAsync(async(req,res)=>{
  const id =req.params.id;
-
  const markOfUser=await Mark.find({userId:id});
+ if(typeof markOfUser[0] == "undefined"){
+   return res.send("your result is not published yet...");
+ }
  const pdfName=markOfUser[0].pdf_path;
  if(pdfName){
  return res.render("result.ejs",{fileName:pdfName});
@@ -104,7 +107,7 @@ router.post(
     }
   })
 );
-router.get("/login", (req, res) => {
+router.get("/login", async(req, res) => {
   res.render("login");
 });
 router.post(
@@ -115,10 +118,14 @@ router.post(
   }),
   (req, res) => {
     req.flash("success", "welcome back!");
-       const redirectUrl ="/dashboard";
-      // const redirectUrl ="/result";
+      //  const redirectUrl ="/dashboard";
+       const redirectUrl ="/";
       delete req.session.returnTo;
-      res.redirect(redirectUrl);
+      //if admin will there...
+      if(req.user.admin==true){
+        return res.redirect("/admin/control");
+      }
+       return res.redirect(redirectUrl);
     }
 );
 router.get("/logout", (req, res) => {
