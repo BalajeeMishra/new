@@ -25,6 +25,8 @@ require("dotenv").config();
   const registration=require("./routes/registration");
   const Admin=require("./routes/admincontrol");
 
+
+
   // let admin;
   //mongoose connect
   mongoose
@@ -101,6 +103,39 @@ app.use(passport.initialize());
     res.locals.error = req.flash("error")||false;
     next();   
   });
+
+
+  app.get("/sms",(req,res)=>{
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
+var services;
+
+client.verify.services.create({friendlyName: 'My Verify Service'})
+                      .then(service => services=service);
+
+      // res.send("HELLO WORLD...")
+
+      //        client.verify.services(services.sid)
+      //        .verifications
+      //        .create({to: '+919315312511', channel: 'sms'})
+      //        .then(verification => console.log(verification.sid));
+
+
+
+      // client.verify.services(services.sid)
+      // .verificationChecks
+      // .create({to: '+919315312511', code: '1234'})
+      // .then(verification_check => console.log(verification_check.status));
+
+
+res.send("hellooo.....")
+  
+  })
+
+
+
+
  
   //routes part.
   app.use("/", Users);
@@ -131,9 +166,7 @@ app.use(passport.initialize());
       res.status(statusCode).render("error", { err });
     }
   });
-  
   const PORT = process.env.PORT || 3000;
-  
   //listening
   app.listen(PORT, () => {
     console.log("APP IS LISTENING ON PORT");
